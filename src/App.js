@@ -9,23 +9,22 @@ function App() {
   useEffect(() => {
 
   //   //GEO place
-  //   const GEOplace = {
-  //     method: 'GET',
-  //     url: 'http://partners.api.skyscanner.net/apiservices/geo/v1.0?apikey=prtl6749387986743898559646983194',
-  // //apikey only
+    const GEOplace = {
+      method: 'GET',
+      url: 'http://partners.api.skyscanner.net/apiservices/geo/v1.0?apikey=prtl6749387986743898559646983194',
+  //apikey only
+      headers: {
+        'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
+        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+      }
+    };
   
-  //     headers: {
-  //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-  //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-  //     }
-  //   };
-  
-  //   axios.request(GEOplace).then(function (response) {
-  //     console.log("GEO: ");
-  //     console.log(response.data);
-  //   }).catch(function (error) {
-  //     console.error(error);
-  //   });
+    axios.request(GEOplace).then(function (response) {
+      console.log("GEO: ");
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
 
 
     const BrowseQuotesInbound = {
@@ -148,10 +147,10 @@ function App() {
     });
   }
 
-  const [myPlace, setMyPlace] = useState();
-  const [destination, setDestination] = useState();
-  const [outBoundDate, setOutBoundDate] = useState();
-  const [inBoundDate, setInBoundDate] = useState();
+  const [myPlace, setMyPlace] = useState("il");
+  const [destination, setDestination] = useState("lond");
+  const [outBoundDate, setOutBoundDate] = useState("2021-05-20");
+  const [inBoundDate, setInBoundDate] = useState("2021-05-25");
   
 
   return (
@@ -180,7 +179,7 @@ function App() {
             <Form.Control placeholder="InBoundPartialDate" value={inBoundDate} onChange={e => setInBoundDate(e.target.value)}/>
           </Col>
           <Col>
-            <Button onClick={callAJAX}>submit</Button>
+            <Button>submit</Button>
           </Col>
         </Form.Row>
       </Form>      
