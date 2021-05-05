@@ -1,0 +1,16 @@
+[
+    {
+        "id":1,
+        "fname":"sara",
+        "lname":"cohen",
+        "email":"sara@sara.com",
+        "pass":"123"
+    },
+    {
+        "id":2,
+        "fname":"nir",
+        "lname":"cohen",
+        "email":"nir@nir.com",
+        "pass":"123"
+    }
+]

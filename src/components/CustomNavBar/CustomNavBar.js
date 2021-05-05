@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
+import airplane from '../../assets/airplane-48.png';
 
 function CustomNavBar(props) {
     return (
         <div>
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home"></Navbar.Brand>
+                <Navbar.Brand href="#/"><img src={airplane}/></Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="#/">Home</Nav.Link>
                     <Nav.Link href="#search-flight">Search Flight</Nav.Link>

@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import reportWebVitals from './reportWebVitals';
+import SearchFlight from './pages/SearchFlight/SearchFlight';
+import HomePage from './pages/HomePage/HomePage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import MyFlights from './pages/MyFlights/MyFlights';
+import DealsPage from './pages/DealsPage/DealsPage';
+import SignUpPage from './pages/SignUpPage/SignUpPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+import CustomNavBar from './components/CustomNavBar/CustomNavBar';
 
 function App() {
 
   useEffect(() => {
 
-  // //   //GEO place
+  //GEO place
     const pathPre = process.env.PUBLIC_URL;
     axios.get(pathPre.concat("/geoData.json")).then(response => {
       console.log("geo data: ");
@@ -164,7 +172,18 @@ function App() {
 
   return (
     <div className="App">
-     
+      <CustomNavBar/>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/"><HomePage/></Route>
+          <Route exact path="/login"><LoginPage/></Route>
+          <Route exact path="/signup"><SignUpPage/></Route>
+          <Route exact path="/deals"><DealsPage/></Route>
+          <Route exact path="/search-flight"><SearchFlight/></Route>
+          <Route exact path="/my-fav-flights"><MyFlights/></Route>
+          <Route path="/"><NotFoundPage/></Route>
+        </Switch>
+      </HashRouter>
     </div>
   );
 }
