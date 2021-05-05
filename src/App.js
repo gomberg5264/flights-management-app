@@ -8,23 +8,29 @@ function App() {
 
   useEffect(() => {
 
-  //   //GEO place
-    const GEOplace = {
-      method: 'GET',
-      url: 'http://partners.api.skyscanner.net/apiservices/geo/v1.0?apikey=prtl6749387986743898559646983194',
-  //apikey only
-      headers: {
-        'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-      }
-    };
-  
-    axios.request(GEOplace).then(function (response) {
-      console.log("GEO: ");
+  // //   //GEO place
+    const pathPre = process.env.PUBLIC_URL;
+    axios.get(pathPre.concat("/geoData.json")).then(response => {
+      console.log("geo data: ");
       console.log(response.data);
-    }).catch(function (error) {
-      console.error(error);
-    });
+    }).catch( err => console.error(err));
+
+  //   const GEOplace = {
+  //     method: 'GET',
+  //     url: 'http://partners.api.skyscanner.net/apiservices/geo/v1.0?apikey=prtl6749387986743898559646983194',
+  // //apikey only
+  //     headers: {
+  //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
+  //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+  //     }
+  //   };
+  
+  //   axios.request(GEOplace).then(function (response) {
+  //     console.log("GEO: ");
+  //     console.log(response.data);
+  //   }).catch(function (error) {
+  //     console.error(error);
+  //   });
 
 
     const BrowseQuotesInbound = {
@@ -87,50 +93,53 @@ function App() {
     }).catch(function (error) {
       console.error(error);
     });
+
+
+
+    const myPlace = {
+      method: 'GET',
+      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/',
+      params: {query: 'israel'},
+      headers: {
+        'x-rapidapi-key': 'a94342958cmsh1dbb3ae79906020p1a4c7ajsn53656455ddcb',
+        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+      }
+    };
+    
+    axios.request(myPlace).then(function (response) {
+      console.log("my place");
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+
+
+    const myDest = {
+      method: 'GET',
+      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/',
+      params: {id: 'elat'},
+      headers: {
+        'x-rapidapi-key': 'a94342958cmsh1dbb3ae79906020p1a4c7ajsn53656455ddcb',
+        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+      }
+    };
+    
+    axios.request(myDest).then(function (response) {
+      console.log("my id");
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+
+
   }, []);
 
-  function callAJAX(){
-    //http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/il/ils/il/?query=israel&apiKey=prtl6749387986743898559646983194
-    
-    const myplace = {
-      method: 'GET',
-      url: 'http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/il/ils/il/?query=israel&apiKey=prtl6749387986743898559646983194',
-      headers: {
-        'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-      }
-    };
-    
-    axios.request(myplace).then(function (response) {
-      console.log("my place: ");
-      console.log(response.data);
-    }).catch(function (error) {
-      console.error(error);
-    });
-//---------------------
-    const mydestination = {
-      method: 'GET',
-      url: 'http://partners.api.skyscanner.net/apiservices/autosuggest/v1.0/il/ils/il/?query=israel&apiKey=prtl6749387986743898559646983194',
-      headers: {
-        'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-      }
-    };
-    
-    axios.request(mydestination).then(function (response) {
-      console.log("destination: ");
-      console.log(response.data);
-      callQuary();
-    }).catch(function (error) {
-      console.error(error);
-    });
-  }
 
   function callQuary(){
     const BrowseDatesInbound = {
       method: 'GET',
       url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0'+
-        '/il/ils/il/elat/pari/'+{outBoundDate}+'/'+{inBoundDate},
+        '/il/ils/il/elat/pari/'+outBoundDate+'/'+inBoundDate,
   //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
   // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
       headers: {
@@ -155,34 +164,7 @@ function App() {
 
   return (
     <div className="App">
-      <Form>
-        <Form.Row className="holder">
-          <Col>
-            <Form.Control placeholder="Country" value="IL"/>
-          </Col>
-          <Col>
-            <Form.Control placeholder="Currency" value="ILS"/>
-          </Col>
-          <Col>
-            <Form.Control placeholder="Local" value="en-US"/>
-          </Col>
-          <Col>
-            <Form.Control placeholder="Origin-Place" value={myPlace} onChange={e => setMyPlace(e.target.value)}/>
-          </Col>
-          <Col>
-            <Form.Control placeholder="Destination-Place" value={destination} onChange={e => setDestination(e.target.value)}/>
-          </Col>
-          <Col>
-            <Form.Control placeholder="OutBoundPartialDate" value={outBoundDate} onChange={e => setOutBoundDate(e.target.value)}/>
-          </Col>
-          <Col>
-            <Form.Control placeholder="InBoundPartialDate" value={inBoundDate} onChange={e => setInBoundDate(e.target.value)}/>
-          </Col>
-          <Col>
-            <Button>submit</Button>
-          </Col>
-        </Form.Row>
-      </Form>      
+     
     </div>
   );
 }
