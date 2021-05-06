@@ -2,20 +2,29 @@ import React from 'react';
 import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
 import airplane from '../../assets/airplane-48.png';
 
-function CustomNavBar(props) {
+function CustomNavBar({activeUser}) {
     return (
         <div>
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand href="#/"><img src={airplane}/></Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="#/">Home</Nav.Link>
-                    <Nav.Link href="#search-flight">Search Flight</Nav.Link>
-                    <Nav.Link href="#deals">Deals</Nav.Link>
-                    <Nav.Link href="#my-fav-flights">My Flights</Nav.Link>
+                    <Nav.Link href="#/search-flight">Search Flight</Nav.Link>
+                    {activeUser?
+                            <>
+                            <Nav.Link href="#/deals">Deals</Nav.Link>
+                            <Nav.Link href="#/my-fav-flights">My Flights</Nav.Link>
+                            </>
+                            :
+                            null
+                    }
+                    
                 </Nav>
-                <Form inline>
-                    <Nav.Link href="#login">Login</Nav.Link>
-                </Form>
+                <Nav className="ml-auto">
+                    {!activeUser ? <Nav.Link href="#/login">Login</Nav.Link> : null}
+                    {!activeUser ? <Nav.Link href="#/signup">Signup</Nav.Link> : null}
+                    {activeUser ? <Nav.Link href="#">Logout</Nav.Link> : null}
+                </Nav>
             </Navbar>
         </div>
     );

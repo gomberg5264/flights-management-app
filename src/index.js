@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Parse from 'parse';
 
-
+// the URL can be change whenever URL of web i want to install the Parse (back4app is auto complete example)
 Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
 Parse.initialize(
   'GM7NPagiW51V4DJFTrpf5LuUL5DoheJTTyquuIs1', // This is your Application ID
