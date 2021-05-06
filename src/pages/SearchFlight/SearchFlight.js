@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SearchFlight.css';
 import { Button, Col, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 function SearchFlight(props) {
 

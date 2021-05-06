@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import './LoginPage.css';
+import Parse from 'parse';
 
 function LoginPage(props) {
     const [username, setUsername] = useState();

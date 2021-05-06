@@ -141,11 +141,11 @@ function App() {
   }, []);
 
 
-  const [activeUser, setActiveUser] = useState(null);
+  const [activeUser, setActiveUser] = useState(1);
 
   return (
     <div className="App">
-      <CustomNavBar activeUser={activeUser}/>
+      <CustomNavBar activeUser={activeUser} onLogOut={() => setActiveUser(null)}/>
       <HashRouter>
         <Switch>
           <Route exact path="/"><HomePage/></Route>
