@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 function MyFlights({activeUser}) {
     //when logout users will get out to the Home page
     if(!activeUser){
-        <Redirect to="#/" />
+        return <Redirect to="/" />
     }
 
     return (

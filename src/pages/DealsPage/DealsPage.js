@@ -6,7 +6,7 @@ import './DealsPage.css';
 function DealsPage({activeUser}) {
     //when logout users will get out to the Home page
     if(!activeUser){
-        <Redirect to="#/" />
+        return <Redirect to="/" />
     }
 
     return (
