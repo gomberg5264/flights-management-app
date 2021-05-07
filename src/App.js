@@ -149,7 +149,7 @@ function App() {
       <HashRouter>
         <Switch>
           <Route exact path="/"><HomePage/></Route>
-          <Route exact path="/login"><LoginPage activeUser={activeUser}/></Route>
+          <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={(user) => setActiveUser(user)}/></Route>
           <Route exact path="/signup"><SignUpPage activeUser={activeUser}/></Route>
           <Route exact path="/deals"><DealsPage activeUser={activeUser}/></Route>
           <Route exact path="/search-flight"><SearchFlight/></Route>

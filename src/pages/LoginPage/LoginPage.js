@@ -3,26 +3,31 @@ import { Alert, Button, Container, Form } from 'react-bootstrap';
 import './LoginPage.css';
 import { Redirect } from 'react-router-dom';
 import Parse from 'parse';
+import UserModel from '../../model/UserModel';
 
-function LoginPage({activeUser}) {
+function LoginPage({activeUser, onLogin}) {
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [showInvalidLogin, setShowInvalidLogin] = useState(false);
 
 
     //when logout users will get out to the Home page
-    if(!activeUser){
+    if(activeUser){
         return <Redirect to="/" />
     }
 
 
     function login(e) {
+        //for not reset the values
         e.preventDefault(e);
 
         // Pass the username and password to logIn function
         Parse.User.logIn(email, pass).then((parseUser) => {
             // Do stuff after successful login
             console.log('Logged in user', parseUser);
+            const activeUser = new UserModel(parseUser);
+            console.log('user of UserModel',activeUser);
+            onLogin(activeUser);
         }).catch(error => {
             setShowInvalidLogin(true);
             console.error('Error while logging in user', error);

@@ -12,7 +12,7 @@ function SignUpPage({activeUser}) {
     const [pass, setPass] = useState();
 
     //when logout users will get out to the Home page
-    if(!activeUser){
+    if(activeUser){
         return <Redirect to="/" />
     }
 
