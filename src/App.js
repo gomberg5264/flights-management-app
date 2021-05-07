@@ -143,11 +143,17 @@ function App() {
   }, []);
 
 
-  const [activeUser, setActiveUser] = useState(1);
+  const [activeUser, setActiveUser] = useState(Parse.User.current()? new UserModel(Parse.User.current()):null);
+
+    function handleLogout() {
+      setActiveUser(null);
+      Parse.User.logOut();
+    }
+
 
   return (
     <div className="App">
-      <CustomNavBar activeUser={activeUser} onLogOut={() => setActiveUser(Parse.User.current()? new UserModel(Parse.User.current()):null)}/>
+      <CustomNavBar activeUser={activeUser} onLogOut={handleLogout}/>
       <HashRouter>
         <Switch>
           <Route exact path="/"><HomePage/></Route>
