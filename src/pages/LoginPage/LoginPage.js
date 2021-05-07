@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Alert, Button, Container, Form } from 'react-bootstrap';
 import './LoginPage.css';
+import { Redirect } from 'react-router-dom';
 import Parse from 'parse';
 
-function LoginPage(props) {
-    const [username, setUsername] = useState();
-    const [fname, setFname] = useState();
-    const [lname, setLname] = useState();
+function LoginPage({activeUser}) {
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
+    const [showInvalidLogin, setShowInvalidLogin] = useState(false);
 
 
-    function login() {
+    //when logout users will get out to the Home page
+    if(!activeUser){
+        return <Redirect to="/" />
+    }
+
+
+    function login(e) {
+        e.preventDefault(e);
+
         // Pass the username and password to logIn function
-        Parse.User.logIn("newUserName", "#Password123").then((user) => {
+        Parse.User.logIn(email, pass).then((parseUser) => {
             // Do stuff after successful login
-            if (typeof document !== 'undefined') document.write(`Logged in user: ${JSON.stringify(user)}`);
-            console.log('Logged in user', user);
+            console.log('Logged in user', parseUser);
         }).catch(error => {
-            if (typeof document !== 'undefined') document.write(`Error while logging in user: ${JSON.stringify(error)}`);
+            setShowInvalidLogin(true);
             console.error('Error while logging in user', error);
         })
     }
@@ -26,19 +32,8 @@ function LoginPage(props) {
     return (
         <Container>
             <h1>Login</h1>
+            { showInvalidLogin? <Alert variant="danger">Invalid Credentails!</Alert> : null}
             <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>user name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                </Form.Group>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="text" placeholder="Enter first name" value={fname} onChange={(e) => setFname(e.target.value)} />
-                </Form.Group>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="text" placeholder="Enter last name" value={lname} onChange={(e) => setLname(e.target.value)} />
-                </Form.Group>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -47,10 +42,7 @@ function LoginPage(props) {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" value={pass} onChange={(e) => setPass(e.target.value)} />
                 </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="button" onClick={login}>
+                <Button variant="primary" type="submit" onClick={login}>
                     Submit
                 </Button>
             </Form>
