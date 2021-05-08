@@ -9,7 +9,7 @@ function MyFlights({activeUser}) {
     }
 
     return (
-        <div>
+        <div className="c-my-flights">
             MyFlights
         </div>
     );

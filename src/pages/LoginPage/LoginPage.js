@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Alert, Button, Container, Form } from 'react-bootstrap';
 import './LoginPage.css';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Parse from 'parse';
 import UserModel from '../../model/UserModel';
+import airplane from '../../assets/airplane-48.png';
+
 
 function LoginPage({activeUser, onLogin}) {
     const [email, setEmail] = useState();
@@ -36,7 +38,8 @@ function LoginPage({activeUser, onLogin}) {
 
     return (
         <Container>
-            <h1>Login</h1>
+            <h3><img width="25px" src={airplane} />  Sky Flight</h3>
+            <h1>Login to continue</h1>
             { showInvalidLogin? <Alert variant="danger">Invalid Credentails!</Alert> : null}
             <Form>
                 <Form.Group controlId="formBasicEmail">
@@ -47,9 +50,10 @@ function LoginPage({activeUser, onLogin}) {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" value={pass} onChange={(e) => setPass(e.target.value)} />
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={login}>
-                    Submit
+                <Button variant="success" type="submit" onClick={login} block>
+                    Log In
                 </Button>
+                <Link to="/signup" >create new account</Link>
             </Form>
         </Container>
     );
