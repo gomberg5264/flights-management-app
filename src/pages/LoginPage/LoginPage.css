@@ -1,3 +1,11 @@
+.p-login{
+    background-image: url("../../assets/airplane.jpg");
+    height: 93vh;
+    background-position: center; /*Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
 .container {
     font-family: 'Itim', cursive;
     font-family: 'Source Sans Pro', sans-serif;
@@ -20,7 +28,7 @@
 }
 
 .container  > form {
-    background-color: azure;
+    background-color: whitesmoke;
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -30,10 +38,9 @@
 
 .container > h3{
     text-align: center;
-    margin: 1.5rem;
+    padding: 1.5rem;
 }
 .container > h1{
     text-align: center;
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
+    padding-bottom: 2rem;
 }
