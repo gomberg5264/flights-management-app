@@ -1,4 +1,3 @@
-
 export default class UserModel {
     #user; //private property
     constructor(parseUser){

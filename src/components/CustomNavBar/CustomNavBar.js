@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button, Form, FormControl, Nav, Navbar } from 'react-bootstrap';
 import airplane from '../../assets/airplane-48.png';
+import './CustomNavBar.css';
 
 function CustomNavBar({activeUser, onLogOut}) {
     return (
-        <div>
+        <div className="c-custom-nav">
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#/"><img src={airplane}/></Navbar.Brand>
+                <Navbar.Brand href="#/"><img className="img" src={airplane}/></Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="#/">Home</Nav.Link>
                     <Nav.Link href="#/search-flight">Search Flight</Nav.Link>

@@ -72,7 +72,7 @@ function SignUpPage({ activeUser }) {
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={signup} block>
                         Sign up
-                </Button>
+                    </Button>
                 </Form>
             </Container>
         </p>
