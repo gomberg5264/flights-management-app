@@ -1,0 +1,21 @@
+.head-container{
+    background-image: url("../../assets/airplane6.jpg");
+    background-position: center; /*Center the image */
+    background-repeat: no-repeat, repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.head-container  h1 , .head-container  p{
+    font-family: 'Itim', cursive;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: whitesmoke;
+    text-shadow: 2px 2px 8px #000000;
+    text-align: center;
+
+}

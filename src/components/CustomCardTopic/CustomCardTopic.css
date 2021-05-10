@@ -40,3 +40,16 @@
   50%  {filter: brightness(80%); bottom: 0.75rem;}
   100% {filter: brightness(70%); bottom: 1rem;}
 }
+
+@media only screen and (max-width: 991px) {
+    /* For mobile and tablet: */
+    .col-lg-4 > .article-container {
+        padding-bottom: 50%;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    /* For mobile and tablet: */
+    .col-lg-4 > .article-container {
+        padding-bottom: 70%;
+    }
+}
