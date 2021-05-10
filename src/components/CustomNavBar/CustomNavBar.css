@@ -1,13 +1,12 @@
 .c-custom-nav > .navbar > .navbar-brand > img {
     position: relative;
     animation-name: example;
-    animation-duration: 4s;
+    animation-duration: 3s;
   }
   
   @keyframes example {
     0%   {filter: brightness(70%); left:0px; top:0px;}
-    25%  {filter: brightness(120%); left:40px; top:-40px;}
-    50%  {filter: brightness(80%); left:60px; top:-60px;}
-    75%  {filter: brightness(150%); left:-120px; top:120px;}
+    50%  {filter: brightness(80%); left:4rem; top:-4rem;}
+    70%  {filter: brightness(150%); left:-4rem; top:4rem;}
     100% {filter: brightness(100%); left:0px; top:0px;}
   }

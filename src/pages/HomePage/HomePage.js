@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import './HomePage.css'
 import {Link, Redirect} from 'react-router-dom';
+import CustomCard from '../../components/CustomCardTopic/CustomCardTopic';
 
 function HomePage({ activeUser }) {
     const [redirect, setRedirect] = useState(null);
 
     if(redirect){
         return <Redirect to={redirect} />;
+    }
+
+    //when card clicked change the redirect value
+    function onCardClick(path) {
+        setRedirect(path);
     }
 
     return (
@@ -22,26 +28,9 @@ function HomePage({ activeUser }) {
                 </div>
             </div>
             <Row>
-                <Col md={12} lg={4}>
-                    <div className="article-container container" onClick={() => setRedirect("/deals") }>
-                        <h3>Top Deals</h3>
-                        <p>See where you can travel to right now and find the best deals across thousands of flights</p>
-                    </div>
-                </Col>
-                <Col md={12} lg={4}>
-                    <div className="article-container container" onClick={() => setRedirect("/search-flight") }>
-                        <h3>Search Flight</h3>
-                        <p>Search and compare hundreds of flights all in one place to find
-                         the great prices available</p>
-                    </div>
-                </Col>
-                <Col md={12} lg={4}>
-                    <div className="article-container container" onClick={() => setRedirect("/my-fav-flights") }>
-                        <h3>My Flights</h3>
-                        <p>Want to look but not ready to book? No problem.
-                        We have a 'saved flights' setting where you can 'star' a flight you like</p>
-                    </div>
-                </Col>
+                <CustomCard onCardClick={() => onCardClick("/deals")}  title="Top Deals" text="See where you can travel to right now and find the best deals across thousands of flights"/>
+                <CustomCard onCardClick={() => onCardClick("/search-flight")}  title="Search Flight" text="Search and compare hundreds of flights all in one place to find the great prices available"/>
+                <CustomCard onCardClick={() => onCardClick("/my-fav-flights")}  title="My Flights" text="Want to look but not ready to book? No problem. We have a 'saved flights' setting where you can 'star' a flight you like"/>
             </Row>
         </div>
     );

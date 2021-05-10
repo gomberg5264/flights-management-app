@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import './DealsPage.css';
@@ -8,6 +9,12 @@ function DealsPage({activeUser}) {
     if(!activeUser){
         return <Redirect to="/" />
     }
+
+    let requestUrl = "https://ipinfo.io";
+    axios.get(requestUrl).then(response =>
+        {
+            console.log("My country is: " + response);
+        }).catch( err => console.error(err));
 
     return (
         <div>
