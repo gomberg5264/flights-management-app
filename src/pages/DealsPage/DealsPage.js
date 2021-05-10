@@ -16,6 +16,10 @@ function DealsPage({activeUser}) {
             console.log("My country is: " + response);
         }).catch( err => console.error(err));
 
+
+        //pictures of cities!!! important
+        //https://www.esky.eu/_fe/img/city_GLA_horizontal_0.jpg
+        //https://static1.eskypartners.com/deals/MAD_1_SquareSmall_290_290.jpg
     return (
         <div>
             Deals 
