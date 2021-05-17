@@ -1,10 +1,12 @@
 import React from 'react';
 import './CustomHeader.css'
+import testImg from '../../assets/airplane6.jpg'
 
-function CustomHeader({textLocation, title, text}) {
+function CustomHeader({img ,textLocation, title, text}) {
 
     const customStyle = {
-        "justify-content": textLocation
+        "justify-content": textLocation,
+        "background-image": `url(${testImg})`
     }
 
     return (
@@ -14,6 +16,7 @@ function CustomHeader({textLocation, title, text}) {
                     <h1>{title}</h1>
                     <p>{text}</p>
                 </div>
+                {/* <img src={testImg}></img> */}
             </div>
         </div>
     );

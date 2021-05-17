@@ -17,11 +17,11 @@ function HomePage({ activeUser }) {
         setRedirect(path);
     }
 
-    const userName = activeUser ? activeUser.username.charAt(0).toUpperCase() + activeUser.username.slice(1): "";
+    const userName = activeUser ? activeUser.username.charAt(0).toUpperCase() + activeUser.username.slice(1)+" ": "";
 
     return (
         <div className="p-home-page">
-            <CustomHeader textLocation="center" title={userName+"Welcome to Sky Flight"} text="Get inspiration, and plan and book your whole trip – we're here to make it all super easy,
+            <CustomHeader img={"../../assets/airplane6.jpg"} textLocation="center" title={userName+"Welcome to Sky Flight"} text="Get inspiration, and plan and book your whole trip – we're here to make it all super easy,
                     wherever you are. find the best flight prices and amazing discounts.
                     Here, you can explore everything the travel industry has to offer. And there are no booking fees or hidden charges – just the best prices.
                     Let the journey begin"/>

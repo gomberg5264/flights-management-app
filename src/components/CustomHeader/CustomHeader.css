@@ -1,5 +1,5 @@
 .head-container{
-    background-image: url("../../assets/airplane6.jpg");
+    /* background-image: url("../../assets/airplane6.jpg"); */
     background-position: center; /*Center the image */
     background-repeat: no-repeat, repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */

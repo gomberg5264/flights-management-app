@@ -17,13 +17,21 @@ import Parse from 'parse';
 function App() {
 
   useEffect(() => {
-
   //GEO place
     const pathPre = process.env.PUBLIC_URL;
     axios.get(pathPre.concat("/geoData.json")).then(response => {
-      console.log("geo data: ");
-      console.log(response.data);
+      let cities = new Map()
+      response.data.Continents.forEach( land => 
+        land.Countries.forEach(country => 
+          country.Cities.forEach( city => cities.set(city.Id,city))
+        )
+      );
+      setCities(cities);
+
+      console.log("GEO MAP", cities);
+      console.log("GEO MAP - example", cities.get("DLZA")["Name"]);
     }).catch( err => console.error(err));
+    console.log("GEO MAP", cities);
 
   //   const GEOplace = {
   //     method: 'GET',
@@ -46,7 +54,7 @@ function App() {
     const BrowseQuotesInbound = {
       method: 'GET',
       url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0'+
-      '/il/ils/il/il/us/anytime/anytime',
+      '/il/ils/il/il/anywhere/anytime/anytime',
   //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
   // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
   
@@ -57,17 +65,17 @@ function App() {
     };
   
     axios.request(BrowseQuotesInbound).then(function (response) {
+      setDeals(response.data);
       console.log("BrowseQuotesInbound: ");
       console.log(response.data);
     }).catch(function (error) {
       console.error(error);
     });
-  
-  
-    const BrowseRoutesInbound = {
+
+    const BrowseQuotesInboundMonth = {
       method: 'GET',
-      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0'+
-      '/il/ils/il/il/us/anytime/anytime',
+      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0'+
+      '/il/ils/il/il/anywhere/2021-05/2021',
   //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
   // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
   
@@ -76,13 +84,35 @@ function App() {
         'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
       }
     };
-    
-    axios.request(BrowseRoutesInbound).then(function (response) {
-      console.log("BrowseRoutesInbound: ");
+  
+    axios.request(BrowseQuotesInboundMonth).then(function (response) {
+      setMonthDeals(response.data);
+      console.log("Monthly: ");
       console.log(response.data);
     }).catch(function (error) {
       console.error(error);
     });
+  
+  //not use for now!!!
+  //   const BrowseRoutesInbound = {
+  //     method: 'GET',
+  //     url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0'+
+  //     '/il/ils/il/il/us/anytime/anytime',
+  // //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
+  // // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
+  
+  //     headers: {
+  //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
+  //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+  //     }
+  //   };
+    
+  //   axios.request(BrowseRoutesInbound).then(function (response) {
+  //     console.log("BrowseRoutesInbound: ");
+  //     console.log(response.data);
+  //   }).catch(function (error) {
+  //     console.error(error);
+  //   });
 
   
     const BrowseDatesInbound = {
@@ -142,14 +172,15 @@ function App() {
     });
   }, []);
 
-
+  const [cities, setCities] = useState(new Map());
+  const [deals, setDeals] = useState();
+  const [monthDeals, setMonthDeals] = useState();
   const [activeUser, setActiveUser] = useState(Parse.User.current()? new UserModel(Parse.User.current()):null);
 
     function handleLogout() {
       setActiveUser(null);
       Parse.User.logOut();
     }
-
 
   return (
     <div className="App">
@@ -159,7 +190,7 @@ function App() {
           <Route exact path="/"><HomePage activeUser={activeUser}/></Route>
           <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={(user) => setActiveUser(user)}/></Route>
           <Route exact path="/signup"><SignUpPage activeUser={activeUser}/></Route>
-          <Route exact path="/deals"><DealsPage activeUser={activeUser}/></Route>
+          <Route exact path="/deals"><DealsPage activeUser={activeUser} deals={deals} month={monthDeals} citiesList={cities}/></Route>
           <Route exact path="/search-flight"><SearchFlight/></Route>
           <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser}/></Route>
           <Route path="/"><NotFoundPage/></Route>
