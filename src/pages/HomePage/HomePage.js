@@ -4,6 +4,8 @@ import './HomePage.css'
 import {Link, Redirect} from 'react-router-dom';
 import CustomCard from '../../components/CustomCardTopic/CustomCardTopic';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
+import Img from '../../assets/airplane6.jpg'
+
 
 function HomePage({ activeUser }) {
     const [redirect, setRedirect] = useState(null);
@@ -21,7 +23,7 @@ function HomePage({ activeUser }) {
 
     return (
         <div className="p-home-page">
-            <CustomHeader img={"../../assets/airplane6.jpg"} textLocation="center" title={userName+"Welcome to Sky Flight"} text="Get inspiration, and plan and book your whole trip – we're here to make it all super easy,
+            <CustomHeader img={Img} textLocation="center" title={userName+"Welcome to Sky Flight"} text="Get inspiration, and plan and book your whole trip – we're here to make it all super easy,
                     wherever you are. find the best flight prices and amazing discounts.
                     Here, you can explore everything the travel industry has to offer. And there are no booking fees or hidden charges – just the best prices.
                     Let the journey begin"/>

@@ -15,7 +15,8 @@
 .custom-container > h2 {
     text-align: center;
     padding: 1.5rem;
-    
+    font-family: 'Itim', cursive;
+    border-bottom: 2px lightgrey solid;
 }
 
 

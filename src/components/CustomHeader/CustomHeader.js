@@ -6,7 +6,7 @@ function CustomHeader({img ,textLocation, title, text}) {
 
     const customStyle = {
         "justify-content": textLocation,
-        "background-image": `url(${testImg})`
+        "background-image": `url(${img})`
     }
 
     return (

@@ -6,7 +6,8 @@ import CustomCarousel from '../../components/CustomCarousel/CustomCarousel';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import ResultCard from '../../components/ResultCard/ResultCard';
 import './DealsPage.css';
-// import x fom 'react-router-do'
+import Img from '../../assets/deals.jpg';
+
 
 function DealsPage({ activeUser, deals, month, citiesList }) {
     //when logout users will get out to the Home page
@@ -73,7 +74,7 @@ function DealsPage({ activeUser, deals, month, citiesList }) {
     //https://static1.eskypartners.com/deals/MAD_1_SquareSmall_290_290.jpg
     return (
         <div className="p-deals">
-            <CustomHeader textLocation="flex-start" title="Plan and grab the best deals" text="See where you can travel to right now and find the best deals across thousands of flights" />
+            <CustomHeader img={Img} textLocation="flex-start" title="Plan and grab the best deals" text="See where you can travel to right now and find the best deals across thousands of flights" />
             {/* <CustomCarousel /> */}
             <div className="custom-container">
                 <h2>The best deals</h2>
