@@ -10,7 +10,6 @@ function CustomHeader({img ,textLocation, title, text}) {
     }
 
     return (
-        <div>
             <div className="head-container" style={customStyle}>
                 <div className="container">
                     <h1>{title}</h1>
@@ -18,7 +17,6 @@ function CustomHeader({img ,textLocation, title, text}) {
                 </div>
                 {/* <img src={testImg}></img> */}
             </div>
-        </div>
     );
 }
 

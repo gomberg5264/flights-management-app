@@ -1,3 +1,39 @@
-.p-search-flight {
+.p-search-flight > form{
+    position: absolute;
+    top: 350px;
+    left: 5vw;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(7,22,36,.5);
+    padding: .5rem 2.5rem;
+    border-radius: 1.5rem;
+}
+
+.p-search-flight > form > .form-row > .col-md-3 > .form-label{
+    /* color: white; */
+    color: var(--wrap-form-element-label,var(--color-2-variant-2,#bcd5f5));
+    text-shadow: 2px 4px 8px #000000;
+    /* font-family: "Noto Sans"; */
+    margin-bottom: 1px;
+}
+
+.p-search-flight > form > .form-row > .col-sm-6 > .mb-2 {
+    color: white;
+}
+
+
+.p-search-flight > form > .form-row:nth-child(2) > .col-sm-6:last-child{
+    text-align: end;
+}
+
+@media only screen and (max-width: 575px) {
+
+    .p-search-flight > form{
+        top: 400px;
+    }
 
 }

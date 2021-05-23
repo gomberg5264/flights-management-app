@@ -21,6 +21,7 @@
     background-repeat: no-repeat, repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
     font-family: 'Itim', cursive;
+    transition: all .5s ease-in-out;
 }
 .col-lg-4 > .article-container > p {
     position: absolute;
