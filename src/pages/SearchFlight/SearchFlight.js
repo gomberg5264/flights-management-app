@@ -112,6 +112,7 @@ function SearchFlight(props) {
           </Col>
         </Form.Row>
       </Form>
+      <p>{flightsResults && flightsResults["Quotes"].length >0  ? "Number of results: "+flightsResults["Quotes"].length : "no results"}</p>
       {
         flightsResults && flightsResults["Quotes"] ?
           flightsResults["Quotes"].map(result => <Row><SearchResult /></Row>)
