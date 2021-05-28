@@ -1,3 +1,15 @@
+.p-search-flight{
+    background-color: rgb(241, 241, 248);
+    min-height: 93vh;
+    max-height: max-content;
+}
+.p-search-flight > .results-holder{
+    padding: 2px 18px;
+}
+.p-search-flight > .results-holder > .row{
+    margin: 6px 0;
+}
+
 .p-search-flight > form{
     position: absolute;
     top: 350px;

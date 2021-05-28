@@ -9,9 +9,9 @@ import SearchResult from '../../components/SearchResult/SearchResult';
 function SearchFlight(props) {
 
   const [myPlace, setMyPlace] = useState("il");
-  const [destination, setDestination] = useState("lond");
-  const [outBoundDate, setOutBoundDate] = useState("2021-05-26");
-  const [inBoundDate, setInBoundDate] = useState("2021-06-25");
+  const [destination, setDestination] = useState("us");
+  const [outBoundDate, setOutBoundDate] = useState("");
+  const [inBoundDate, setInBoundDate] = useState("2021-06");
   const [direct, setDirect] = useState(false);
   const [flightsResults, setFlightsResults] = useState(null);
 
@@ -67,12 +67,12 @@ function SearchFlight(props) {
     console.log("map place", mapPlaces);
     //create mapCarriers HashMap
     flightsResults["Carriers"].forEach(carrier => {
-      mapCarriers.set(carrier["CarrierId"], carrier);
+      mapCarriers.set(carrier["CarrierId"], carrier["Name"]);
     });
 
     console.log("map Carriers", mapCarriers);
     //filter Quotes
-    if(direct){
+    if (direct) {
       filteredResults = flightsResults["Quotes"].filter((deal, index) => filterByDirectFlight(deal, index));
     }
   }
@@ -112,12 +112,20 @@ function SearchFlight(props) {
           </Col>
         </Form.Row>
       </Form>
-      <p>{flightsResults && flightsResults["Quotes"].length >0  ? "Number of results: "+flightsResults["Quotes"].length : "no results"}</p>
-      {
-        flightsResults && flightsResults["Quotes"] ?
-          flightsResults["Quotes"].map(result => <Row><SearchResult /></Row>)
-          : ""
-      }
+      <p>{flightsResults && flightsResults["Quotes"].length > 0 ? "Number of results: " + flightsResults["Quotes"].length : "no results"}</p>
+      <div className="results-holder">
+        {
+          flightsResults && flightsResults["Quotes"] ?
+            flightsResults["Quotes"].map((result , index) => <Row><SearchResult key={index} 
+            country={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CountryName} 
+            city={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName} 
+            cityId={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).IataCode} 
+            dates={[result["OutboundLeg"]["DepartureDate"],result["InboundLeg"]["DepartureDate"]]} 
+            carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]),mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
+            cost={result["MinPrice"]}/></Row>)
+            : ""
+        }
+      </div>
     </div>
   );
 }

@@ -192,7 +192,7 @@ function App() {
           <Route exact path="/signup"><SignUpPage activeUser={activeUser}/></Route>
           <Route exact path="/deals"><DealsPage activeUser={activeUser} deals={deals} month={monthDeals} citiesList={cities}/></Route>
           <Route exact path="/search-flight"><SearchFlight/></Route>
-          <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser}/></Route>
+          <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser} cities={cities}/></Route>
           <Route path="/"><NotFoundPage/></Route>
         </Switch>
       </HashRouter>
