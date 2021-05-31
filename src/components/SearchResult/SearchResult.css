@@ -49,6 +49,7 @@
     font-family: Ubuntu, sans-serif;
     font-size: 24px;
     font-weight: 700;
+    fill: #68697f;
 }
 
 .search-data > .flight-return > svg{
@@ -57,6 +58,7 @@
     font-weight: 700;
     -ms-transform: rotate(220deg);
     transform: rotate(90deg);
+    fill: #68697f;
 }
 
 .search-data > div{

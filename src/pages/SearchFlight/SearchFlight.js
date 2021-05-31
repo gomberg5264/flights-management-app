@@ -6,7 +6,7 @@ import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Img from '../../assets/search1.jpg';
 import SearchResult from '../../components/SearchResult/SearchResult';
 
-function SearchFlight(props) {
+function SearchFlight({cities}) {
 
   const [myPlace, setMyPlace] = useState("il");
   const [destination, setDestination] = useState("us");
@@ -72,13 +72,14 @@ function SearchFlight(props) {
 
     console.log("map Carriers", mapCarriers);
     //filter Quotes
-    if (direct) {
-      filteredResults = flightsResults["Quotes"].filter((deal, index) => filterByDirectFlight(deal, index));
-    }
+    direct? filteredResults = flightsResults["Quotes"].filter((deal, index) => filterByDirectFlight(deal, index)): filteredResults=flightsResults["Quotes"];
+    console.log("filteredResults", filteredResults);
+    console.log("filteredResults count", filteredResults.length);
+    console.log(direct);
   }
 
   function filterByDirectFlight(deal, index) {
-    return true;
+    return deal["Direct"];
   }
 
   return (
@@ -105,24 +106,25 @@ function SearchFlight(props) {
         </Form.Row>
         <Form.Row>
           <Col sm={6}>
-            <Form.Check type="checkbox" id="autoSizingCheck" className="mb-2" label="Direct Flight" />
+            <Form.Check onClick={() => setDirect(!direct)} type="checkbox" id="autoSizingCheck" className="mb-2" label="Direct Flight" />
           </Col>
           <Col sm={6}>
             <Button onClick={callQuary}>Search</Button>
           </Col>
         </Form.Row>
       </Form>
-      <p>{flightsResults && flightsResults["Quotes"].length > 0 ? "Number of results: " + flightsResults["Quotes"].length : "no results"}</p>
+      <p>{flightsResults && filteredResults ? "Number of results: " + filteredResults.length : "no results"}</p>
       <div className="results-holder">
         {
-          flightsResults && flightsResults["Quotes"] ?
-            flightsResults["Quotes"].map((result , index) => <Row><SearchResult key={index} 
+          flightsResults && filteredResults ?
+            filteredResults.map((result , index) => <Row><SearchResult key={index} 
             country={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CountryName} 
             city={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName} 
             cityId={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).IataCode} 
             dates={[result["OutboundLeg"]["DepartureDate"],result["InboundLeg"]["DepartureDate"]]} 
             carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]),mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
-            cost={result["MinPrice"]}/></Row>)
+            cost={result["MinPrice"]}
+            cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId)}/></Row>)
             : ""
         }
       </div>
