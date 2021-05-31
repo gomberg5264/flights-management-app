@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MyFlights.css';
 import { Redirect } from "react-router-dom";
 import { Col, Row } from 'react-bootstrap';
@@ -12,8 +12,10 @@ function MyFlights({ activeUser, cities }) {
 
     return (
         <div className="c-my-flights">
-            MyFlights
+            <h1>My Flights:</h1>
+            {
 
+            }
         </div>
     );
 }
