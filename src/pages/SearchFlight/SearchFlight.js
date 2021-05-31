@@ -120,10 +120,11 @@ function SearchFlight({cities}) {
             filteredResults.map((result , index) => <Row><SearchResult key={index} 
             country={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CountryName} 
             city={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName} 
-            cityId={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).IataCode} 
+            originCity={flightsResults["Places"][0].CityName?flightsResults["Places"][0].CityName:flightsResults["Places"][0].Name} 
             dates={[result["OutboundLeg"]["DepartureDate"],result["InboundLeg"]["DepartureDate"]]} 
             carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]),mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
             cost={result["MinPrice"]}
+            direct={result["Direct"]}
             cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId)}/></Row>)
             : ""
         }

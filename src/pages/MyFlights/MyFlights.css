@@ -2,3 +2,10 @@
     font-family: 'Itim', cursive;
     padding: 5px;
 }
+
+.c-my-flights > h1{
+    text-align: center;
+    padding-bottom: 2rem;
+    color: rgb(44, 44, 44);
+}
+
