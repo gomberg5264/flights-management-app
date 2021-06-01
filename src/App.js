@@ -72,10 +72,14 @@ function App() {
       console.error(error);
     });
 
+    let month = new Date().getMonth() + 1;
+    let year = new Date().getFullYear();
+    month = month <10? "0"+month: month;
+
     const BrowseQuotesInboundMonth = {
       method: 'GET',
       url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0'+
-      '/il/ils/il/il/anywhere/2021-05/2021',
+      '/il/ils/il/il/anywhere/'+year+'-'+month+'/'+year,
   //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
   // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
   
@@ -191,7 +195,7 @@ function App() {
           <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={(user) => setActiveUser(user)}/></Route>
           <Route exact path="/signup"><SignUpPage activeUser={activeUser}/></Route>
           <Route exact path="/deals"><DealsPage activeUser={activeUser} deals={deals} month={monthDeals} citiesList={cities}/></Route>
-          <Route exact path="/search-flight"><SearchFlight cities={cities}/></Route>
+          <Route exact path="/search-flight"><SearchFlight activeUser={activeUser} cities={cities}/></Route>
           <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser} cities={cities}/></Route>
           <Route path="/"><NotFoundPage/></Route>
         </Switch>

@@ -87,7 +87,7 @@ function DealsPage({ activeUser, deals, month, citiesList }) {
                             : <p>loading...</p>
                     }
                 </Row>
-                <h2>The next 3 month best deals</h2>
+                <h2>The month's best deals</h2>
                 <Row>
                     {
                         filteredMonthQ && citiesList ?
