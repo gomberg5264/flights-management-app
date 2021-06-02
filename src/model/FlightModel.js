@@ -1,7 +1,7 @@
 export default class FlightModel {
     constructor(parseFlight){
         this.city = parseFlight.get("city");
-        this.citId = parseFlight.get("cityId");
+        this.cityId = parseFlight.get("cityId");
         this.country = parseFlight.get("country");
         this.departureDate = parseFlight.get("departureDate");
         this.returnDate = parseFlight.get("returnDate");

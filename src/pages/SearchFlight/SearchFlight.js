@@ -125,7 +125,7 @@ function SearchFlight({cities}) {
             carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]),mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
             cost={result["MinPrice"]}
             direct={result["Direct"]}
-            cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId.IataCode)}
+            cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId).IataCode}
             operation={""}/></Row>)
             : ""
         }

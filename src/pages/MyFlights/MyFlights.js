@@ -16,10 +16,10 @@ function MyFlights({ activeUser, cities }) {
         //reading data from parse
         const flightsData = Parse.Object.extend('flightsData');
         const query = new Parse.Query(flightsData);
-        query.equalTo("objectId", "nFFoExR9kg");
-        query.find().then((results) => {
-            for (const object of results) {
-                myData.push(new FlightModel(object));
+        query.equalTo("userId", Parse.User.current());
+        query.find().then((flightsResults) => {
+            for (const flight of flightsResults) {
+                myData.push(new FlightModel(flight));
             }
         }, (error) => {
             console.error('Error while fetching flightsData', error);
@@ -27,7 +27,7 @@ function MyFlights({ activeUser, cities }) {
         setMyFlights(myData);
     }, []);
 
-    console.log(myFlights)
+    console.log("my flights",myFlights)
 
     //when logout users will get out to the Home page
     if (!activeUser) {

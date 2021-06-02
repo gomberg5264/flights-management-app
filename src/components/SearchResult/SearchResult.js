@@ -8,6 +8,7 @@ function SearchResult({ country, city, originCity, dates, carrier, cost, direct,
     const [imgSrc, setImgSrc] = useState("https://www.esky.eu/_fe/img/city_" + cityData + "_horizontal_0.jpg");
 
     let id = cityData;
+    console.log("cityData",cityData );
     //I'm using 3 sets of url for img(defaults url, when error eccured, when second error accured), so if one didn't work it'll set the others
     function HandleErrorUrl() {
         if (imgSrc === "https://www.esky.eu/_fe/img/city_" + id + "_horizontal_0.jpg") {
@@ -28,17 +29,18 @@ function SearchResult({ country, city, originCity, dates, carrier, cost, direct,
 
             myNewObject.set('city', city);
             myNewObject.set('cityId', cityData);
-            myNewObject.set('country', country);
+            myNewObject.set('country', country); 
             myNewObject.set('departureDate', new Date(dates[0]));
             myNewObject.set('returnDate', new Date(dates[1]));
             myNewObject.set('sourcePlace', originCity);
             myNewObject.set('cost', cost);
             myNewObject.set('direct', direct);
             myNewObject.set('carriers', carrier);
+            myNewObject.set('userId', Parse.User.current());
 
             myNewObject.save().then(
                 (result) => {
-                    console.log('flightsData created', result);
+                    console.log('new flightsData saved!', result);
                 },
                 (error) => {
                     console.error('Error while creating flightsData: ', error);
