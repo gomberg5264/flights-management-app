@@ -46,39 +46,12 @@ function MyFlights({ activeUser, cities }) {
     function handleSave(e) {
         console.log(e.currentTarget.getAttribute('id'))
         console.log(e.currentTarget.getAttribute('data-myattr'))
+        let flightIndex = e.currentTarget.getAttribute('data-myattr');
         let save = e.currentTarget.getAttribute('id');
 
-        let flightdata = myFlights[e.currentTarget.getAttribute('data-myattr')];
+        let flightdata = myFlights[flightIndex];
         console.log("my flight data DATA", flightdata);
-        if (save == false) {
-
-            //save the data at Parse
-            const flightsData = Parse.Object.extend('flightsData');
-            const myNewObject = new flightsData();
-
-            myNewObject.set('city', flightdata.city);
-            myNewObject.set('cityId', flightdata.cityId);
-            myNewObject.set('country', flightdata.country);
-            myNewObject.set('departureDate', new Date(new Intl.DateTimeFormat('default', options).format(flightdata.departureDate)));
-            myNewObject.set('returnDate', new Date(new Intl.DateTimeFormat('default', options).format(flightdata.returnDate)));
-            myNewObject.set('sourcePlace', flightdata.sourcePlace);
-            myNewObject.set('cost', flightdata.cost);
-            myNewObject.set('direct', flightdata.direct);
-            myNewObject.set('carriers', flightdata.carriers);
-            myNewObject.set('userId', Parse.User.current());
-
-            myNewObject.save().then(
-                (result) => {
-                    console.log('new flightsData saved!', result);
-                },
-                (error) => {
-                    console.error('Error while creating flightsData: ', error);
-                }
-            );
-
-            //change the save state (and the icon)
-        } else {
-
+        if (save == true) {
             const objectId = flightdata.id;
 
             (async () => {
@@ -89,7 +62,7 @@ function MyFlights({ activeUser, cities }) {
                     try {
                         const response = await object.destroy();
                         console.log('Deleted ParseObject', response);
-                        setMyFlights([].concat(myFlights.splice(e.currentTarget.getAttribute('data-myattr'), 1)))
+                        setMyFlights([].concat(myFlights.splice(flightIndex, 1)));
                     } catch (error) {
                         console.error('Error while deleting ParseObject', error);
                     }
@@ -104,7 +77,7 @@ function MyFlights({ activeUser, cities }) {
         <div className="c-my-flights">
             <h1>My Flights:</h1>
             {
-                myFlights && myFlights.length > 0 ? myFlights.map((flight, index) =>
+                myFlights ? myFlights.map((flight, index) =>
                     <Row><SearchResult key={index}
                         country={flight.country}
                         city={flight.city}
@@ -117,7 +90,7 @@ function MyFlights({ activeUser, cities }) {
                         Save={true}
                         onSave={handleSave}
                         index={index} /></Row>)
-                    : "Loading..."
+                    : myFlights?.length > 0 ? "Loading..." : ""
             }
         </div>
     );

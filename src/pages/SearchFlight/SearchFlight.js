@@ -84,6 +84,8 @@ function SearchFlight({ cities }) {
     return deal["Direct"];
   }
 
+  //the Flight id - so if i want to remove the Heart, the flight will be deleted from parse - it's only works until user search new flights
+  let saveFlightId = new Map();
 
   function handleSave(e) {
     let save = e.currentTarget.getAttribute('id');
@@ -109,6 +111,7 @@ function SearchFlight({ cities }) {
         (result) => {
           console.log('new flightsData saved!', result);
           //change the save state (and the icon)
+          saveFlightId.set(e.currentTarget.getAttribute('data-myattr'), result.id);
         },
         (error) => {
           console.error('Error while creating flightsData: ', error);
@@ -116,8 +119,22 @@ function SearchFlight({ cities }) {
       );
     } else {
       //delete the data that saved
-
-
+      const objectId = saveFlightId.get(e.currentTarget.getAttribute('data-myattr'));
+      (async () => {
+        const query = new Parse.Query('flightsData');
+        try {
+          // here you put the objectId that you want to delete
+          const object = await query.get(objectId);
+          try {
+            const response = await object.destroy();
+            console.log('Deleted ParseObject', response);
+          } catch (error) {
+            console.error('Error while deleting ParseObject', error);
+          }
+        } catch (error) {
+          console.error('Error while retrieving ParseObject', error);
+        }
+      })();
 
       //change the save state (and the icon)
     }
