@@ -10,7 +10,6 @@ import SearchResult from '../../components/SearchResult/SearchResult';
 function MyFlights({ activeUser, cities }) {
 
     const [myFlights, setMyFlights] = useState(null);
-    const [save, setSave] = useState(true);
 
     useEffect(() => {
         let myData = [];
@@ -48,10 +47,11 @@ function MyFlights({ activeUser, cities }) {
         console.log(e.currentTarget.getAttribute('id'))
         console.log(e.currentTarget.getAttribute('data-myattr'))
         let save = e.currentTarget.getAttribute('id');
-        if (save == false) {
-            let flightdata = myFlights[e.currentTarget.getAttribute('data-myattr')];
 
-            console.log("my flight data DATA",flightdata);
+        let flightdata = myFlights[e.currentTarget.getAttribute('data-myattr')];
+        console.log("my flight data DATA", flightdata);
+        if (save == false) {
+
             //save the data at Parse
             const flightsData = Parse.Object.extend('flightsData');
             const myNewObject = new flightsData();
@@ -77,12 +77,26 @@ function MyFlights({ activeUser, cities }) {
             );
 
             //change the save state (and the icon)
-            setSave(!save);
         } else {
 
+            const objectId = flightdata.id;
 
-            //change the save state (and the icon)
-            setSave(!save);
+            (async () => {
+                const query = new Parse.Query('flightsData');
+                try {
+                    // here you put the objectId that you want to delete
+                    const object = await query.get(objectId);
+                    try {
+                        const response = await object.destroy();
+                        console.log('Deleted ParseObject', response);
+                        setMyFlights([].concat(myFlights.splice(e.currentTarget.getAttribute('data-myattr'), 1)))
+                    } catch (error) {
+                        console.error('Error while deleting ParseObject', error);
+                    }
+                } catch (error) {
+                    console.error('Error while retrieving ParseObject', error);
+                }
+            })();
         }
     }
 
