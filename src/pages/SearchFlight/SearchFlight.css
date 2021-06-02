@@ -1,7 +1,7 @@
 .p-search-flight{
     background-color: rgb(241, 241, 248);
-    min-height: 93vh;
     max-height: max-content;
+    min-height: 93vh;
 }
 .p-search-flight > .results-holder{
     padding: 2px 18px;

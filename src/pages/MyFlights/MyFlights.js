@@ -76,22 +76,24 @@ function MyFlights({ activeUser, cities }) {
     return (
         <div className="c-my-flights">
             <h1>My Flights:</h1>
-            {
-                myFlights ? myFlights.map((flight, index) =>
-                    <Row><SearchResult key={index}
-                        country={flight.country}
-                        city={flight.city}
-                        originCity={flight.sourcePlace}
-                        dates={[new Intl.DateTimeFormat('default', options).format(flight.departureDate), new Intl.DateTimeFormat('default', options).format(flight.returnDate)]}
-                        carrier={flight.carriers}
-                        cost={flight.cost}
-                        direct={flight.direct}
-                        cityData={flight.cityId}
-                        Save={true}
-                        onSave={handleSave}
-                        index={index} /></Row>)
-                    : myFlights?.length > 0 ? "Loading..." : ""
-            }
+            <div className="results-holder">
+                {
+                    myFlights ? myFlights.map((flight, index) =>
+                        <Row><SearchResult key={index}
+                            country={flight.country}
+                            city={flight.city}
+                            originCity={flight.sourcePlace}
+                            dates={[new Intl.DateTimeFormat('default', options).format(flight.departureDate), new Intl.DateTimeFormat('default', options).format(flight.returnDate)]}
+                            carrier={flight.carriers}
+                            cost={flight.cost}
+                            direct={flight.direct}
+                            cityData={flight.cityId}
+                            Save={true}
+                            onSave={handleSave}
+                            index={index} /></Row>)
+                        : myFlights?.length > 0 ? "Loading..." : ""
+                }
+            </div>
         </div>
     );
 }

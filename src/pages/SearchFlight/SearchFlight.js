@@ -89,13 +89,14 @@ function SearchFlight({ cities }) {
 
   function handleSave(e) {
     let save = e.currentTarget.getAttribute('id');
+    let flightIndex = e.currentTarget.getAttribute('data-myattr');
     if (save == false) {
-      let flightData = filteredResults[e.currentTarget.getAttribute('data-myattr')];
+      let flightData = filteredResults[flightIndex];
       //save the data at Parse
       const flightsData = Parse.Object.extend('flightsData');
       const myNewObject = new flightsData();
       console.log("THIS IS TEMP TEST", flightData);
-      console.log("THIS IS TEMP TEST", e.currentTarget.getAttribute('data-myattr'));
+      console.log("THIS IS TEMP TEST", flightIndex);
       myNewObject.set('city', mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityName);
       myNewObject.set('cityId', cities.get(mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityId).IataCode);
       myNewObject.set('country', mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CountryName);
@@ -111,7 +112,7 @@ function SearchFlight({ cities }) {
         (result) => {
           console.log('new flightsData saved!', result);
           //change the save state (and the icon)
-          saveFlightId.set(e.currentTarget.getAttribute('data-myattr'), result.id);
+          saveFlightId.set(flightIndex, result.id);
         },
         (error) => {
           console.error('Error while creating flightsData: ', error);
@@ -119,7 +120,7 @@ function SearchFlight({ cities }) {
       );
     } else {
       //delete the data that saved
-      const objectId = saveFlightId.get(e.currentTarget.getAttribute('data-myattr'));
+      const objectId = saveFlightId.get(flightIndex);
       (async () => {
         const query = new Parse.Query('flightsData');
         try {

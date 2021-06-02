@@ -1,11 +1,21 @@
 .c-my-flights{
     font-family: 'Itim', cursive;
     padding: 5px;
+    background-color: rgb(241, 241, 248);
+    max-height: max-content;
+    min-height: 93vh;
 }
 
 .c-my-flights > h1{
     text-align: center;
     padding-bottom: 2rem;
     color: rgb(44, 44, 44);
+}
+
+.c-my-flights > .results-holder{
+    padding: 2px 18px;
+}
+.c-my-flights > .results-holder > .row{
+    margin: 6px 0;
 }
 
