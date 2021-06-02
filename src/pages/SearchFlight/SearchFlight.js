@@ -5,8 +5,10 @@ import axios from 'axios';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Img from '../../assets/search1.jpg';
 import SearchResult from '../../components/SearchResult/SearchResult';
+import Parse from 'parse';
 
-function SearchFlight({cities}) {
+
+function SearchFlight({ cities }) {
 
   const [myPlace, setMyPlace] = useState("il");
   const [destination, setDestination] = useState("us");
@@ -72,7 +74,7 @@ function SearchFlight({cities}) {
 
     console.log("map Carriers", mapCarriers);
     //filter Quotes
-    direct? filteredResults = flightsResults["Quotes"].filter((deal, index) => filterByDirectFlight(deal, index)): filteredResults=flightsResults["Quotes"];
+    direct ? filteredResults = flightsResults["Quotes"].filter((deal, index) => filterByDirectFlight(deal, index)) : filteredResults = flightsResults["Quotes"];
     console.log("filteredResults", filteredResults);
     console.log("filteredResults count", filteredResults.length);
     console.log(direct);
@@ -80,6 +82,45 @@ function SearchFlight({cities}) {
 
   function filterByDirectFlight(deal, index) {
     return deal["Direct"];
+  }
+
+
+  function handleSave(e) {
+    let save = e.currentTarget.getAttribute('id');
+    if (save == false) {
+      let flightData = filteredResults[e.currentTarget.getAttribute('data-myattr')];
+      //save the data at Parse
+      const flightsData = Parse.Object.extend('flightsData');
+      const myNewObject = new flightsData();
+      console.log("THIS IS TEMP TEST", flightData);
+      console.log("THIS IS TEMP TEST", e.currentTarget.getAttribute('data-myattr'));
+      myNewObject.set('city', mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityName);
+      myNewObject.set('cityId', cities.get(mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityId).IataCode);
+      myNewObject.set('country', mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CountryName);
+      myNewObject.set('departureDate', new Date(flightData["OutboundLeg"]["DepartureDate"]));
+      myNewObject.set('returnDate', new Date(flightData["InboundLeg"]["DepartureDate"]));
+      myNewObject.set('sourcePlace', flightsResults["Places"][0].CityName ? flightsResults["Places"][0].CityName : flightsResults["Places"][0].Name);
+      myNewObject.set('cost', flightData["MinPrice"]);
+      myNewObject.set('direct', flightData["Direct"]);
+      myNewObject.set('carriers', [mapCarriers.get(flightData["OutboundLeg"]["CarrierIds"][0]), mapCarriers.get(flightData["InboundLeg"]["CarrierIds"][0])]);
+      myNewObject.set('userId', Parse.User.current());
+
+      myNewObject.save().then(
+        (result) => {
+          console.log('new flightsData saved!', result);
+          //change the save state (and the icon)
+        },
+        (error) => {
+          console.error('Error while creating flightsData: ', error);
+        }
+      );
+    } else {
+      //delete the data that saved
+
+
+
+      //change the save state (and the icon)
+    }
   }
 
   return (
@@ -117,16 +158,18 @@ function SearchFlight({cities}) {
       <div className="results-holder">
         {
           flightsResults && filteredResults ?
-            filteredResults.map((result , index) => <Row><SearchResult key={index} 
-            country={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CountryName} 
-            city={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName} 
-            originCity={flightsResults["Places"][0].CityName?flightsResults["Places"][0].CityName:flightsResults["Places"][0].Name} 
-            dates={[result["OutboundLeg"]["DepartureDate"],result["InboundLeg"]["DepartureDate"]]} 
-            carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]),mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
-            cost={result["MinPrice"]}
-            direct={result["Direct"]}
-            cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId).IataCode}
-            operation={""}/></Row>)
+            filteredResults.map((result, index) => <Row><SearchResult key={index}
+              country={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CountryName}
+              city={mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName}
+              originCity={flightsResults["Places"][0].CityName ? flightsResults["Places"][0].CityName : flightsResults["Places"][0].Name}
+              dates={[result["OutboundLeg"]["DepartureDate"], result["InboundLeg"]["DepartureDate"]]}
+              carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]), mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
+              cost={result["MinPrice"]}
+              direct={result["Direct"]}
+              cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId).IataCode}
+              Save={false}
+              onSave={handleSave}
+              index={index} /></Row>)
             : ""
         }
       </div>

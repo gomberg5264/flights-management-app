@@ -10,6 +10,7 @@ import SearchResult from '../../components/SearchResult/SearchResult';
 function MyFlights({ activeUser, cities }) {
 
     const [myFlights, setMyFlights] = useState(null);
+    const [save, setSave] = useState(true);
 
     useEffect(() => {
         let myData = [];
@@ -21,13 +22,13 @@ function MyFlights({ activeUser, cities }) {
             for (const flight of flightsResults) {
                 myData.push(new FlightModel(flight));
             }
+            setMyFlights(myData);
         }, (error) => {
             console.error('Error while fetching flightsData', error);
         });
-        setMyFlights(myData);
     }, []);
 
-    console.log("my flights",myFlights)
+    console.log("my flights", myFlights)
 
     //when logout users will get out to the Home page
     if (!activeUser) {
@@ -41,6 +42,49 @@ function MyFlights({ activeUser, cities }) {
         hour12: false,
         timeZone: 'Asia/Jerusalem' //'America/Los_Angeles'
     };
+
+
+    function handleSave(e) {
+        console.log(e.currentTarget.getAttribute('id'))
+        console.log(e.currentTarget.getAttribute('data-myattr'))
+        let save = e.currentTarget.getAttribute('id');
+        if (save == false) {
+            let flightdata = myFlights[e.currentTarget.getAttribute('data-myattr')];
+
+            console.log("my flight data DATA",flightdata);
+            //save the data at Parse
+            const flightsData = Parse.Object.extend('flightsData');
+            const myNewObject = new flightsData();
+
+            myNewObject.set('city', flightdata.city);
+            myNewObject.set('cityId', flightdata.cityId);
+            myNewObject.set('country', flightdata.country);
+            myNewObject.set('departureDate', new Date(new Intl.DateTimeFormat('default', options).format(flightdata.departureDate)));
+            myNewObject.set('returnDate', new Date(new Intl.DateTimeFormat('default', options).format(flightdata.returnDate)));
+            myNewObject.set('sourcePlace', flightdata.sourcePlace);
+            myNewObject.set('cost', flightdata.cost);
+            myNewObject.set('direct', flightdata.direct);
+            myNewObject.set('carriers', flightdata.carriers);
+            myNewObject.set('userId', Parse.User.current());
+
+            myNewObject.save().then(
+                (result) => {
+                    console.log('new flightsData saved!', result);
+                },
+                (error) => {
+                    console.error('Error while creating flightsData: ', error);
+                }
+            );
+
+            //change the save state (and the icon)
+            setSave(!save);
+        } else {
+
+
+            //change the save state (and the icon)
+            setSave(!save);
+        }
+    }
 
     return (
         <div className="c-my-flights">
@@ -56,7 +100,9 @@ function MyFlights({ activeUser, cities }) {
                         cost={flight.cost}
                         direct={flight.direct}
                         cityData={flight.cityId}
-                        operation={"data"} /></Row>)
+                        Save={true}
+                        onSave={handleSave}
+                        index={index} /></Row>)
                     : "Loading..."
             }
         </div>

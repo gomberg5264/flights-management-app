@@ -73,7 +73,7 @@
     /* text-shadow: 2px 2px 8px #000000; */
 }
 
-.search-data > div > span {
+.search-data > div > div  {
     color: red;
     font-size: 27px;
     font-weight: 700;
