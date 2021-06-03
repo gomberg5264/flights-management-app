@@ -172,7 +172,7 @@ function SearchFlight({ cities }) {
           </Col>
         </Form.Row>
       </Form>
-      <p>{flightsResults && filteredResults ? "Number of results: " + filteredResults.length : "no results"}</p>
+      <p>{flightsResults && filteredResults ? "Number of results: " + filteredResults.length : flightsResults?.length >0 ?"no results":""}</p>
       <div className="results-holder">
         {
           flightsResults && filteredResults ?

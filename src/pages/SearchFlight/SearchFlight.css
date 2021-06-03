@@ -3,6 +3,12 @@
     max-height: max-content;
     min-height: 93vh;
 }
+.p-search-flight > p{
+    margin-left: 30px;
+    margin-right: auto;
+    font-weight: bold;
+}
+
 .p-search-flight > .results-holder{
     padding: 2px 18px;
 }
