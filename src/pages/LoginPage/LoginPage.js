@@ -10,7 +10,7 @@ import airplane from '../../assets/airplane-48.png';
 function LoginPage({ activeUser, onLogin }) {
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
-    const [showInvalidLogin, setShowInvalidLogin] = useState(false);
+    const [showInvalidLogin, setShowInvalidLogin] = useState();
 
 
     //when logout users will get out to the Home page
@@ -31,7 +31,7 @@ function LoginPage({ activeUser, onLogin }) {
             console.log('user of UserModel', activeUser);
             onLogin(activeUser);
         }).catch(error => {
-            setShowInvalidLogin(true);
+            setShowInvalidLogin(error);
             console.error('Error while logging in user', error);
         })
     }
@@ -41,7 +41,7 @@ function LoginPage({ activeUser, onLogin }) {
             <Container>
                 <h3><img width="25px" src={airplane} />  Sky Flight</h3>
                 <h1>Login to continue</h1>
-                {showInvalidLogin ? <Alert variant="danger">Invalid Credentails!</Alert> : null}
+                {showInvalidLogin ? <Alert variant="danger">{showInvalidLogin}</Alert> : null} {/*Invalid Credentails!*/}
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
