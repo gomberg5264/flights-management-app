@@ -6,9 +6,10 @@ import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Img from '../../assets/search1.jpg';
 import SearchResult from '../../components/SearchResult/SearchResult';
 import Parse from 'parse';
+import SearchBox from '../../components/SearchBox/SearchBox';
 
 
-function SearchFlight({ cities }) {
+function SearchFlight({ cities, countries, citiesValue, countriesValue }) {
 
   const [myPlace, setMyPlace] = useState("il");
   const [destination, setDestination] = useState("us");
@@ -16,6 +17,8 @@ function SearchFlight({ cities }) {
   const [inBoundDate, setInBoundDate] = useState("2021-06");
   const [direct, setDirect] = useState(false);
   const [flightsResults, setFlightsResults] = useState(null);
+  const [fromResults, setFromResults] = useState([]);
+  const [toResults, setToResults] = useState([]);
 
   //initial outBoundDate
   if (outBoundDate === "") {
@@ -35,25 +38,33 @@ function SearchFlight({ cities }) {
 
 
   function callQuary() {
-    const test = {
-      method: 'GET',
-      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0' +
-        '/il/ils/il/' + myPlace + '/' + destination + '/' + outBoundDate + '/' + inBoundDate,
-      //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
-      // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
+    let originPlace = cities.get(myPlace) ? cities.get(myPlace).IataCode.toLowerCase() : (countries.get(myPlace) ? countries.get(myPlace).Id.toLowerCase() : "");
+    let destinationPlace = cities.get(destination) ? cities.get(destination).IataCode.toLowerCase() : (countries.get(destination) ? countries.get(destination).Id.toLowerCase() : "");;
+    console.log("originPlace", originPlace);
+    console.log("destinationPlace", destinationPlace);
+    if (originPlace && destinationPlace) {
+      // destinationPlace = destinationPlace.toLowerCase();
+      // destinationPlace = destinationPlace.toLowerCase();
+      const test = {
+        method: 'GET',
+        url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0' +
+          '/il/ils/il/' + originPlace + '/' + destinationPlace + '/' + outBoundDate + '/' + inBoundDate,
+        //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
+        // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
 
-      headers: {
-        'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-        'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-      }
-    };
+        headers: {
+          'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
+          'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+        }
+      };
 
-    axios.request(test).then(function (response) {
-      console.log("test", response.data);
-      setFlightsResults(response.data);
-    }).catch(function (error) {
-      console.error(error);
-    });
+      axios.request(test).then(function (response) {
+        console.log("test", response.data);
+        setFlightsResults(response.data);
+      }).catch(function (error) {
+        console.error(error);
+      });
+    }
   }
 
 
@@ -98,7 +109,7 @@ function SearchFlight({ cities }) {
       console.log("THIS IS TEMP TEST", flightData);
       console.log("THIS IS TEMP TEST", flightIndex);
       myNewObject.set('city', mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityName);
-      myNewObject.set('cityId', cities.get(mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityId).IataCode);
+      myNewObject.set('cityId', cities.get(mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CityName).IataCode);
       myNewObject.set('country', mapPlaces.get(flightData["OutboundLeg"]["DestinationId"]).CountryName);
       myNewObject.set('departureDate', new Date(flightData["OutboundLeg"]["DepartureDate"]));
       myNewObject.set('returnDate', new Date(flightData["InboundLeg"]["DepartureDate"]));
@@ -136,10 +147,49 @@ function SearchFlight({ cities }) {
           console.error('Error while retrieving ParseObject', error);
         }
       })();
-
-      //change the save state (and the icon)
     }
   }
+
+  function handleFromSearchChange(newSearchText) {
+    setMyPlace(newSearchText);
+    let resultSuggest = [];
+    setFromResults(resultSuggest);
+    if (newSearchText) {
+      (async () => {
+        citiesValue.forEach(city => city.includes(newSearchText) && resultSuggest.push(city + " ," + cities.get(city).Country))
+        countriesValue.forEach(country => country.includes(newSearchText) && resultSuggest.push(country))
+        console.log("resultSuggest", resultSuggest);
+      })();
+    } else {
+      setFromResults([]);
+    }
+  }
+  function onFromResultSelected(result) {
+    setMyPlace(result);
+
+    setFromResults([]);
+  }
+
+  function handleToSearchChange(newSearchText) {
+    setDestination(newSearchText);
+    let resultSuggest = [];
+    setToResults(resultSuggest);
+    if (newSearchText) {
+      (async () => {
+        citiesValue.forEach(city => city.includes(newSearchText) && resultSuggest.push(city + " ," + cities.get(city).Country))
+        countriesValue.forEach(country => country.includes(newSearchText) && resultSuggest.push(country))
+        console.log("resultSuggest", resultSuggest);
+      })();
+    } else {
+      setToResults([]);
+    }
+  }
+  function onToResultSelected(result) {
+    setDestination(result);
+
+    setToResults([]);
+  }
+
 
   return (
     <div className="p-search-flight">
@@ -148,11 +198,13 @@ function SearchFlight({ cities }) {
         <Form.Row className="holder">
           <Col md={3} sm={6}>
             <Form.Label for="currency">From</Form.Label>
-            <Form.Control placeholder="Country, City or airport" value={myPlace} onChange={e => setMyPlace(e.target.value)} />
+            {/* <Form.Control placeholder="Country, City or airport" value={myPlace} onChange={e => setMyPlace(e.target.value)} /> */}
+            <SearchBox placeholder="Country, City or airport" searchText={myPlace} onSearchChange={handleFromSearchChange} results={fromResults} onResultSelected={onFromResultSelected} />
           </Col>
           <Col md={3} sm={6}>
             <Form.Label for="currency">To</Form.Label>
-            <Form.Control placeholder="Country, City or airport" value={destination} onChange={e => setDestination(e.target.value)} />
+            {/* <Form.Control placeholder="Country, City or airport" value={destination} onChange={e => setDestination(e.target.value)} /> */}
+            <SearchBox placeholder="Country, City or airport" searchText={destination} onSearchChange={handleToSearchChange} results={toResults} onResultSelected={onToResultSelected} />
           </Col>
           <Col md={3} sm={6}>
             <Form.Label for="currency">Departure date</Form.Label>
@@ -172,7 +224,7 @@ function SearchFlight({ cities }) {
           </Col>
         </Form.Row>
       </Form>
-      <p>{flightsResults && filteredResults ? "Number of results: " + filteredResults.length : flightsResults?.length >0 ?"no results":""}</p>
+      <p>{flightsResults && filteredResults ? "Number of results: " + filteredResults.length : flightsResults?.length > 0 ? "no results" : ""}</p>
       <div className="results-holder">
         {
           flightsResults && filteredResults ?
@@ -184,7 +236,7 @@ function SearchFlight({ cities }) {
               carrier={[mapCarriers.get(result["OutboundLeg"]["CarrierIds"][0]), mapCarriers.get(result["InboundLeg"]["CarrierIds"][0])]}
               cost={result["MinPrice"]}
               direct={result["Direct"]}
-              cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityId).IataCode}
+              cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName).IataCode}
               Save={false}
               onSave={handleSave}
               index={index} /></Row>)

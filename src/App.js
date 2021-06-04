@@ -17,53 +17,58 @@ import Parse from 'parse';
 function App() {
 
   useEffect(() => {
-  //GEO place
+    //GEO place
     const pathPre = process.env.PUBLIC_URL;
     axios.get(pathPre.concat("/geoData.json")).then(response => {
       let cities = new Map()
-      response.data.Continents.forEach( land => 
-        land.Countries.forEach(country => 
-          country.Cities.forEach( city => cities.set(city.Id,city))
-        )
+      let countries = new Map()
+      response.data.Continents.forEach(land =>
+        land.Countries.forEach(country => {
+          countries.set(country.Name,country);
+          country.Cities.forEach(city => {
+            let newCity = city;
+            newCity["Country"] = country.Name;
+            cities.set(city.Name, city)
+          });
+        })
       );
-      setCities(cities);
 
-      console.log("GEO MAP", cities);
+      setLocations([countries, cities]);
+      console.log("GEO MAP countries", countries);
+      console.log("GEO MAP cities", cities);
       console.log("GEO MAP - example", cities.get("DLZA")["Name"]);
-    }).catch( err => console.error(err));
-    console.log("GEO MAP", cities);
+    }).catch(err => console.error(err));
+    //   const GEOplace = {
+    //     method: 'GET',
+    //     url: 'http://partners.api.skyscanner.net/apiservices/geo/v1.0?apikey=prtl6749387986743898559646983194',
+    // //apikey only
+    //     headers: {
+    //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
+    //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+    //     }
+    //   };
 
-  //   const GEOplace = {
-  //     method: 'GET',
-  //     url: 'http://partners.api.skyscanner.net/apiservices/geo/v1.0?apikey=prtl6749387986743898559646983194',
-  // //apikey only
-  //     headers: {
-  //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-  //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-  //     }
-  //   };
-  
-  //   axios.request(GEOplace).then(function (response) {
-  //     console.log("GEO: ");
-  //     console.log(response.data);
-  //   }).catch(function (error) {
-  //     console.error(error);
-  //   });
+    //   axios.request(GEOplace).then(function (response) {
+    //     console.log("GEO: ");
+    //     console.log(response.data);
+    //   }).catch(function (error) {
+    //     console.error(error);
+    //   });
 
 
     const BrowseQuotesInbound = {
       method: 'GET',
-      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0'+
-      '/il/ils/il/il/anywhere/anytime/anytime',
-  //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
-  // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
-  
+      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0' +
+        '/il/ils/il/il/anywhere/anytime/anytime',
+      //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
+      // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
+
       headers: {
         'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
         'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
       }
     };
-  
+
     axios.request(BrowseQuotesInbound).then(function (response) {
       setDeals(response.data);
       console.log("BrowseQuotesInbound: ");
@@ -74,21 +79,21 @@ function App() {
 
     let month = new Date().getMonth() + 1;
     let year = new Date().getFullYear();
-    month = month <10? "0"+month: month;
+    month = month < 10 ? "0" + month : month;
 
     const BrowseQuotesInboundMonth = {
       method: 'GET',
-      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0'+
-      '/il/ils/il/il/anywhere/'+year+'-'+month+'/'+year,
-  //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
-  // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
-  
+      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0' +
+        '/il/ils/il/il/anywhere/' + year + '-' + month + '/' + year,
+      //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
+      // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
+
       headers: {
         'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
         'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
       }
     };
-  
+
     axios.request(BrowseQuotesInboundMonth).then(function (response) {
       setMonthDeals(response.data);
       console.log("Monthly: ");
@@ -96,41 +101,41 @@ function App() {
     }).catch(function (error) {
       console.error(error);
     });
-  
-  //not use for now!!!
-  //   const BrowseRoutesInbound = {
-  //     method: 'GET',
-  //     url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0'+
-  //     '/il/ils/il/il/us/anytime/anytime',
-  // //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
-  // // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
-  
-  //     headers: {
-  //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
-  //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
-  //     }
-  //   };
-    
-  //   axios.request(BrowseRoutesInbound).then(function (response) {
-  //     console.log("BrowseRoutesInbound: ");
-  //     console.log(response.data);
-  //   }).catch(function (error) {
-  //     console.error(error);
-  //   });
 
-  
+    //not use for now!!!
+    //   const BrowseRoutesInbound = {
+    //     method: 'GET',
+    //     url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0'+
+    //     '/il/ils/il/il/us/anytime/anytime',
+    // //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
+    // // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
+
+    //     headers: {
+    //       'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
+    //       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
+    //     }
+    //   };
+
+    //   axios.request(BrowseRoutesInbound).then(function (response) {
+    //     console.log("BrowseRoutesInbound: ");
+    //     console.log(response.data);
+    //   }).catch(function (error) {
+    //     console.error(error);
+    //   });
+
+
     const BrowseDatesInbound = {
       method: 'GET',
-      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0'+
+      url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0' +
         '/il/ils/il/elat/pari/anytime/anytime',
-  //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
-  // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
+      //{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}
+      // market_c/ V / ISO local/ see places/ see places / see places / yyyy-mm-dd  / (optional) yyyy-mm-dd (empty string for oneway trip.)
       headers: {
         'x-rapidapi-key': 'cdc00ae67amsh7ae44a7423a7a49p12b1aejsn6bd7ce98384d',
         'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
       }
     };
-    
+
     axios.request(BrowseDatesInbound).then(function (response) {
       console.log("BrowseDatesInbound: ");
       console.log(response.data);
@@ -143,13 +148,13 @@ function App() {
     const myPlace = {
       method: 'GET',
       url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/',
-      params: {query: 'israel'},
+      params: { query: 'israel' },
       headers: {
         'x-rapidapi-key': 'a94342958cmsh1dbb3ae79906020p1a4c7ajsn53656455ddcb',
         'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
       }
     };
-    
+
     axios.request(myPlace).then(function (response) {
       console.log("my place");
       console.log(response.data);
@@ -161,13 +166,13 @@ function App() {
     const myDest = {
       method: 'GET',
       url: 'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/',
-      params: {id: 'elat'},
+      params: { id: 'elat' },
       headers: {
         'x-rapidapi-key': 'a94342958cmsh1dbb3ae79906020p1a4c7ajsn53656455ddcb',
         'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com'
       }
     };
-    
+
     axios.request(myDest).then(function (response) {
       console.log("my id");
       console.log(response.data);
@@ -176,28 +181,30 @@ function App() {
     });
   }, []);
 
-  const [cities, setCities] = useState(new Map());
+  const [locations, setLocations] = useState([new Map(), new Map()]);
   const [deals, setDeals] = useState();
   const [monthDeals, setMonthDeals] = useState();
-  const [activeUser, setActiveUser] = useState(Parse.User.current()? new UserModel(Parse.User.current()):null);
+  const [activeUser, setActiveUser] = useState(Parse.User.current() ? new UserModel(Parse.User.current()) : null);
 
-    function handleLogout() {
-      setActiveUser(null);
-      Parse.User.logOut();
-    }
+  function handleLogout() {
+    setActiveUser(null);
+    Parse.User.logOut();
+  }
+
+  console.log("locations",locations[1])
 
   return (
     <div className="App">
-      <CustomNavBar activeUser={activeUser} onLogOut={handleLogout}/>
+      <CustomNavBar activeUser={activeUser} onLogOut={handleLogout} />
       <HashRouter>
         <Switch>
-          <Route exact path="/"><HomePage activeUser={activeUser}/></Route>
-          <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={(user) => setActiveUser(user)}/></Route>
-          <Route exact path="/signup"><SignUpPage activeUser={activeUser} onSignUp={(user) => setActiveUser(user)}/></Route>
-          <Route exact path="/deals"><DealsPage activeUser={activeUser} deals={deals} month={monthDeals} citiesList={cities}/></Route>
-          <Route exact path="/search-flight"><SearchFlight activeUser={activeUser} cities={cities}/></Route>
-          <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser} cities={cities}/></Route>
-          <Route path="/"><NotFoundPage/></Route>
+          <Route exact path="/"><HomePage activeUser={activeUser} /></Route>
+          <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={(user) => setActiveUser(user)} /></Route>
+          <Route exact path="/signup"><SignUpPage activeUser={activeUser} onSignUp={(user) => setActiveUser(user)} /></Route>
+          <Route exact path="/deals"><DealsPage activeUser={activeUser} deals={deals} month={monthDeals} citiesList={locations[1]} /></Route>
+          <Route exact path="/search-flight"><SearchFlight activeUser={activeUser} cities={locations[1]} countries={locations[0]} citiesValue={Array.from(locations[1].keys())} countriesValue={Array.from(locations[0].keys())}/></Route>
+          <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser} /></Route>
+          <Route path="/"><NotFoundPage /></Route>
         </Switch>
       </HashRouter>
     </div>

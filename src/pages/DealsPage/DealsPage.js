@@ -83,7 +83,7 @@ function DealsPage({ activeUser, deals, month, citiesList }) {
                         filteredDealsQ && citiesList ?
                             filteredDealsQ.map((deal, index) => <Col md={6} lg={4}><ResultCard key={index} country={mapPlaces.get(deal["OutboundLeg"]["DestinationId"]).CountryName}
                                 city={mapPlaces.get(deal["OutboundLeg"]["DestinationId"]).CityName} cityId={mapPlaces.get(deal["OutboundLeg"]["DestinationId"]).CityId} //.substring(0, 3)//
-                                cost={deal["MinPrice"]} FlightObj={deal} cityData={citiesList.get(mapPlaces.get(deal["OutboundLeg"]["DestinationId"]).CityId)} /></Col>)
+                                cost={deal["MinPrice"]} FlightObj={deal} cityData={citiesList.get(mapPlaces.get(deal["OutboundLeg"]["DestinationId"]).CityName)} /></Col>)
                             : <p>loading...</p>
                     }
                 </Row>
@@ -93,7 +93,7 @@ function DealsPage({ activeUser, deals, month, citiesList }) {
                         filteredMonthQ && citiesList ?
                             filteredMonthQ.map((deal, index) => <Col md={6} lg={4}><ResultCard key={index} country={mapPlacesMonth.get(deal["OutboundLeg"]["DestinationId"]).CountryName}
                                 city={mapPlacesMonth.get(deal["OutboundLeg"]["DestinationId"]).CityName} cityId={mapPlacesMonth.get(deal["OutboundLeg"]["DestinationId"]).CityId} //.substring(0, 3)//
-                                cost={deal["MinPrice"]} FlightObj={deal} cityData={citiesList.get(mapPlacesMonth.get(deal["OutboundLeg"]["DestinationId"]).CityId)} /></Col>)
+                                cost={deal["MinPrice"]} FlightObj={deal} cityData={citiesList.get(mapPlacesMonth.get(deal["OutboundLeg"]["DestinationId"]).CityName)} /></Col>)
                             : <p>loading...</p>
                     }
                 </Row>

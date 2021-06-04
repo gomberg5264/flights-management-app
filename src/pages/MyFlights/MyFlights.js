@@ -7,7 +7,7 @@ import Parse from 'parse';
 import SearchResult from '../../components/SearchResult/SearchResult';
 
 
-function MyFlights({ activeUser, cities }) {
+function MyFlights({ activeUser}) {
 
     const [myFlights, setMyFlights] = useState(null);
 
