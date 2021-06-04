@@ -193,7 +193,7 @@ function App() {
         <Switch>
           <Route exact path="/"><HomePage activeUser={activeUser}/></Route>
           <Route exact path="/login"><LoginPage activeUser={activeUser} onLogin={(user) => setActiveUser(user)}/></Route>
-          <Route exact path="/signup"><SignUpPage activeUser={activeUser}/></Route>
+          <Route exact path="/signup"><SignUpPage activeUser={activeUser} onSignUp={(user) => setActiveUser(user)}/></Route>
           <Route exact path="/deals"><DealsPage activeUser={activeUser} deals={deals} month={monthDeals} citiesList={cities}/></Route>
           <Route exact path="/search-flight"><SearchFlight activeUser={activeUser} cities={cities}/></Route>
           <Route exact path="/my-fav-flights"><MyFlights activeUser={activeUser} cities={cities}/></Route>
