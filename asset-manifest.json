@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/flights-management-app/static/css/main.626c4c6c.chunk.css",
-    "main.js": "/flights-management-app/static/js/main.c5f17a63.chunk.js",
-    "main.js.map": "/flights-management-app/static/js/main.c5f17a63.chunk.js.map",
-    "runtime-main.js": "/flights-management-app/static/js/runtime-main.2048deed.js",
-    "runtime-main.js.map": "/flights-management-app/static/js/runtime-main.2048deed.js.map",
+    "main.css": "/flights-management-app/static/css/main.d88a0e1a.chunk.css",
+    "main.js": "/flights-management-app/static/js/main.8a71ef54.chunk.js",
+    "main.js.map": "/flights-management-app/static/js/main.8a71ef54.chunk.js.map",
+    "runtime-main.js": "/flights-management-app/static/js/runtime-main.a6cee33a.js",
+    "runtime-main.js.map": "/flights-management-app/static/js/runtime-main.a6cee33a.js.map",
     "static/css/2.184f8ef6.chunk.css": "/flights-management-app/static/css/2.184f8ef6.chunk.css",
-    "static/js/2.85223b53.chunk.js": "/flights-management-app/static/js/2.85223b53.chunk.js",
-    "static/js/2.85223b53.chunk.js.map": "/flights-management-app/static/js/2.85223b53.chunk.js.map",
-    "static/js/3.91c968cc.chunk.js": "/flights-management-app/static/js/3.91c968cc.chunk.js",
-    "static/js/3.91c968cc.chunk.js.map": "/flights-management-app/static/js/3.91c968cc.chunk.js.map",
+    "static/js/2.2892fe95.chunk.js": "/flights-management-app/static/js/2.2892fe95.chunk.js",
+    "static/js/2.2892fe95.chunk.js.map": "/flights-management-app/static/js/2.2892fe95.chunk.js.map",
+    "static/js/3.3e33fb8c.chunk.js": "/flights-management-app/static/js/3.3e33fb8c.chunk.js",
+    "static/js/3.3e33fb8c.chunk.js.map": "/flights-management-app/static/js/3.3e33fb8c.chunk.js.map",
     "index.html": "/flights-management-app/index.html",
     "static/css/2.184f8ef6.chunk.css.map": "/flights-management-app/static/css/2.184f8ef6.chunk.css.map",
-    "static/css/main.626c4c6c.chunk.css.map": "/flights-management-app/static/css/main.626c4c6c.chunk.css.map",
-    "static/js/2.85223b53.chunk.js.LICENSE.txt": "/flights-management-app/static/js/2.85223b53.chunk.js.LICENSE.txt",
+    "static/css/main.d88a0e1a.chunk.css.map": "/flights-management-app/static/css/main.d88a0e1a.chunk.css.map",
+    "static/js/2.2892fe95.chunk.js.LICENSE.txt": "/flights-management-app/static/js/2.2892fe95.chunk.js.LICENSE.txt",
     "static/media/LoginPage.css": "/flights-management-app/static/media/airplane.79981fca.jpg",
     "static/media/airplane6.800b13f7.jpg": "/flights-management-app/static/media/airplane6.800b13f7.jpg",
     "static/media/CustomCardTopic.css": "/flights-management-app/static/media/search1.993f2de3.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.2048deed.js",
+    "static/js/runtime-main.a6cee33a.js",
     "static/css/2.184f8ef6.chunk.css",
-    "static/js/2.85223b53.chunk.js",
-    "static/css/main.626c4c6c.chunk.css",
-    "static/js/main.c5f17a63.chunk.js"
+    "static/js/2.2892fe95.chunk.js",
+    "static/css/main.d88a0e1a.chunk.css",
+    "static/js/main.8a71ef54.chunk.js"
   ]
 }
