@@ -9,7 +9,7 @@ import Parse from 'parse';
 import SearchBox from '../../components/SearchBox/SearchBox';
 
 
-function SearchFlight({ cities, countries, citiesValue, countriesValue }) {
+function SearchFlight({ activeUser, cities, countries, citiesValue, countriesValue }) {
 
   const [myPlace, setMyPlace] = useState("il");
   const [destination, setDestination] = useState("us");
@@ -239,7 +239,8 @@ function SearchFlight({ cities, countries, citiesValue, countriesValue }) {
               cityData={cities.get(mapPlaces.get(result["OutboundLeg"]["DestinationId"]).CityName).IataCode}
               Save={false}
               onSave={handleSave}
-              index={index} /></Row>)
+              index={index}
+              activeUser={activeUser} /></Row>)
             : ""
         }
       </div>

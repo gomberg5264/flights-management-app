@@ -24,6 +24,7 @@ function MyFlights({ activeUser}) {
             setMyFlights(myData);
         }, (error) => {
             console.error('Error while fetching flightsData', error);
+            console.log("you failed to get data from Parse");
         });
     }, []);
 
