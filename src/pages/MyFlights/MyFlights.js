@@ -91,7 +91,8 @@ function MyFlights({ activeUser}) {
                             cityData={flight.cityId}
                             Save={true}
                             onSave={handleSave}
-                            index={index} /></Row>)
+                            index={index}
+                            activeUser={activeUser} /></Row>)
                         : myFlights?.length > 0 ? "Loading..." : ""
                 }
             </div>
