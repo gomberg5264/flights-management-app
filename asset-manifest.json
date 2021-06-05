@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/flights-management-app/static/css/main.3ddb4835.chunk.css",
-    "main.js": "/flights-management-app/static/js/main.d41b3f29.chunk.js",
-    "main.js.map": "/flights-management-app/static/js/main.d41b3f29.chunk.js.map",
+    "main.js": "/flights-management-app/static/js/main.b035c4d2.chunk.js",
+    "main.js.map": "/flights-management-app/static/js/main.b035c4d2.chunk.js.map",
     "runtime-main.js": "/flights-management-app/static/js/runtime-main.a6cee33a.js",
     "runtime-main.js.map": "/flights-management-app/static/js/runtime-main.a6cee33a.js.map",
     "static/css/2.184f8ef6.chunk.css": "/flights-management-app/static/css/2.184f8ef6.chunk.css",
@@ -23,6 +23,6 @@
     "static/css/2.184f8ef6.chunk.css",
     "static/js/2.f3df65df.chunk.js",
     "static/css/main.3ddb4835.chunk.css",
-    "static/js/main.d41b3f29.chunk.js"
+    "static/js/main.b035c4d2.chunk.js"
   ]
 }
